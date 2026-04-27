@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Overview of your learning progress{% endblock %}
+
+{% block content %}
+
+<div class="row g-4">
+
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h5>DevOps</h5>
+            <p>Track your CI/CD journey</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h5>Kubernetes</h5>
+            <p>Cluster and deployment knowledge</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h5>Projects</h5>
+            <p>Your real implementations</p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

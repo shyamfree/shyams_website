@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ tool_name }}{% endblock %}
+{% block page_subtitle %}{{ tool_desc }}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Home</a></li>
+<li class="breadcrumb-item"><a href="/skills/devops">DevOps</a></li>
+<li class="breadcrumb-item active">{{ tool_name }}</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- ===== LEFT SECTION MENU ===== -->
+    <div class="col-md-3">
+        <div class="card p-3">
+            <h6>Sections</h6>
+            <ul class="nav flex-column">
+
+                {% for key in sections.keys() %}
+                <li>
+                    <a href="?section={{ key }}"
+                       class="menu-item {% if section == key %}active{% endif %}">
+                        {{ key.capitalize() }}
+                    </a>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== CONTENT ===== -->
+    <div class="col-md-9">
+        <div class="card p-3">
+
+            <!-- ===== HEADER + EDIT BUTTON ===== -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">{{ section.capitalize() }}</h5>
+
+                {% if session.get("user") == "admin" %}
+                    {% if request.args.get("edit") == "true" %}
+                        <a href="?section={{ section }}" class="btn btn-secondary btn-sm">Cancel</a>
+                    {% else %}
+                        <a href="?section={{ section }}&edit=true" class="btn btn-warning btn-sm">Edit</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <!-- ===== EDIT MODE ===== -->
+            {% if request.args.get("edit") == "true" and session.get("user") == "admin" %}
+
+                <form method="POST">
+                    <textarea name="content"
+                              rows="12"
+                              class="form-control mb-3">{{ sections.get(section) }}</textarea>
+
+                    <button type="submit" class="btn btn-success">Save</button>
+                </form>
+
+            {% else %}
+
+            <!-- ===== VIEW MODE ===== -->
+                <div>
+                    <p>{{ sections.get(section, "No content available") }}</p>
+                </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

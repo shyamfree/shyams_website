@@ -1,0 +1,10 @@
+{
+  "name": "Kubernetes",
+  "description": "Container orchestration platform",
+  "sections": {
+    "overview": "Kubernetes manages containerized applications.",
+    "commands": "kubectl get pods, kubectl apply",
+    "notes": "K8s is powerful but complex.",
+    "flow": "User → API Server → Scheduler → Node → Pod"
+  }
+}

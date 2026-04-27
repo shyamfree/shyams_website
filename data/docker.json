@@ -1,0 +1,10 @@
+{
+  "name": "Docker",
+  "description": "Containerization platform",
+  "sections": {
+    "overview": "Docker allows you to package applications into containers.",
+    "commands": "docker build, docker run, docker ps",
+    "notes": "Docker is lightweight and fast.",
+    "flow": "Developer \u2192 Docker \u2192 Image \u2192 Container \u2192 Deployment"
+  }
+}
