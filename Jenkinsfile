@@ -57,7 +57,7 @@ pipeline {
 
         stage ('k8s image update') {
             steps {
-                ''' sh sed -i 's|VERSION|$BUILD_NUMBER|g' kubernetes/deployment.yaml '''
+                sh '''sed -i 's|VERSION|$BUILD_NUMBER|g' kubernetes/deployment.yaml '''
             }
         }
         stage ('Deploy to k8s') {
