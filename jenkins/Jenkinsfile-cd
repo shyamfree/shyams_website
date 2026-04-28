@@ -14,11 +14,19 @@ pipeline {
         }
         stage('Read images from file') {
             steps {
+                sh '''
+                pwd
+                ls -R
+                '''
                 script {
                     def config = readYaml file: 'jenkins/image-configuration.yaml'
                     env.IMAGE_NAME = config.image.repository
-                    env.IMAGE_TAG = config.tag
+                    env.IMAGE_TAG = config.image.tag
                 }
+                sh """
+                echo IMAGE_NAME: ${env.IMAGE_NAME}
+                echo IMAGE_TAG: ${env.IMAGE_TAG}
+                """
             }
         }
        
