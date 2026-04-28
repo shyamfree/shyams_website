@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+    environment {
+
+    }
+    stages {
+        stage('Read images from file') {
+            steps {
+                script {
+                    def config = readYaml file: 'image-configuration.yaml'
+                    env.IMAGE_NAME = config.image.repository
+                    env.IMAGE_TAG = config.tag
+                }
+            }
+        }
+       
+        stage ('k8s image update') {
+            steps {
+                sh '''sed -i "s|IMAGE_NAME|${IMAGE_NAME}|g" kubernetes/base/deployment.yaml '''
+                sh '''sed -i "s|IMAGE_TAG|${IMAGE_TAG}|g" kubernetes/base/deployment.yaml '''
+            }
+        }
+
+
+        stage ('push to git') {
+            steps {
+                sh '''
+                git add .
+                git commit -m "Image tag version ---> ${IMAGE_NAME} : ${IMAGE_TAG}"
+                git push -u origin main
+                '''
+            }
+        }
+        // stage ('Deploy to k8s') {
+        //     steps {
+        //         sh 'kubectl delete deployment devops-portal-deployment -ndevops|| true'
+        //         sh 'kubectl create namespace devops || true'
+        //         sh 'kubectl apply -f kubernetes/deployment.yaml -ndevops'
+        //         sh 'kubectl apply -f kubernetes/service.yaml -ndevops'
+        //     }
+        // }
+        // stage ('Check the deployment and service') {
+        //     steps {
+        //         sh 'kubectl get pods -ndevops'
+        //         sh 'kubectl get svc -ndevops'
+        //     }
+        // }
+        // stage('Wait and port forward') {
+        //      steps {
+        //         sh 'sleep 10'
+        //         sh 'kubectl port-forward service/devops-portal-service 9090:80 --address 0.0.0.0 -ndevops'
+        //      }
+        // }
+    }
+}

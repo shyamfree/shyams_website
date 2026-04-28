@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: devops-portal
-        image: shyamfree13/devops-portal:VERSION
+        image: IMAGE_NAME:IMAGE_TAG
         ports:
         - containerPort: 5000
