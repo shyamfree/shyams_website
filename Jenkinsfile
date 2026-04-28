@@ -64,7 +64,7 @@ pipeline {
         stage ('Deploy to k8s') {
             steps {
                 sh 'kubectl delete deployment devops-portal-deployment -ndevops|| true'
-                sh 'kubectl create namespace devops'
+                sh 'kubectl create namespace devops || true'
                 sh 'kubectl apply -f kubernetes/deployment.yaml -ndevops'
                 sh 'kubectl apply -f kubernetes/service.yaml -ndevops'
             }
