@@ -15,7 +15,7 @@ pipeline {
         stage('Read images from file') {
             steps {
                 script {
-                    def config = readYaml file: 'image-configuration.yaml'
+                    def config = readYaml file: 'jenkins/image-configuration.yaml'
                     env.IMAGE_NAME = config.image.repository
                     env.IMAGE_TAG = config.tag
                 }
