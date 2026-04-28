@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_USER = 'shyamfree13'
         DOCKER_REPO = 'devops-portal'
-        VERSION = '${BUILD_NUMBER}'
+        VERSION = "${BUILD_NUMBER}"
     }
     stages {
         stage ('Git url') {
