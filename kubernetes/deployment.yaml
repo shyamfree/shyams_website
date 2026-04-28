@@ -15,7 +15,7 @@ spec:
         app: portal
     spec:
       containers:
-      - name: devops-portal-ui
+      - name: shyamfree13/devops-portal
         image: dportal:VERSION
         ports:
         - containerPort: 5000

@@ -58,6 +58,7 @@ pipeline {
         stage ('k8s image update') {
             steps {
                 sh '''sed -i "s|VERSION|${VERSION}|g" kubernetes/deployment.yaml '''
+                sh 'echo '
             }
         }
         stage ('Deploy to k8s') {
@@ -70,8 +71,8 @@ pipeline {
         }
         stage ('Check the deployment and service') {
             steps {
-                sh 'kubectl get pods'
-                sh 'kubectl get svc'
+                sh 'kubectl get pods -ndevops'
+                sh 'kubectl get svc -ndevops'
             }
         }
 
