@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: devops-portal
-        image: shyamfree13/devops-portal:30
+        image: shyamfree13/devops-portal:25
         ports:
         - containerPort: 5000
