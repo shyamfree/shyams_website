@@ -57,13 +57,15 @@ pipeline {
 
         stage ('k8s image update') {
             steps {
-                sh '''sed -i 's|VERSION|$VERSION|g' kubernetes/deployment.yaml '''
+                sh '''sed -i "s|VERSION|${VERSION}|g" kubernetes/deployment.yaml '''
             }
         }
         stage ('Deploy to k8s') {
             steps {
-                sh 'kubectl apply -f kubernetes/deployment.yaml'
-                sh 'kubectl apply -f kubernetes/service.yaml'
+                sh 'kubectl delete deployment devops-portal-deployment -ndevops|| true'
+                sh 'kubectl create namespace devops'
+                sh 'kubectl apply -f kubernetes/deployment.yaml -ndevops'
+                sh 'kubectl apply -f kubernetes/service.yaml -ndevops'
             }
         }
         stage ('Check the deployment and service') {

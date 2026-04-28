@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devops-portal--deployment
+  name: devops-portal-deployment
   labels:
     app: portal
 spec:
