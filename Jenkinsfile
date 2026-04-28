@@ -14,7 +14,7 @@ pipeline {
         }
         stage ('Docker build') {
             steps {
-                sh 'docker build -t dportal:v1 .'
+                sh 'docker build -t dportal:${BUILD_NUMBER} .'
             }
         }
         stage ('Docker run') {
