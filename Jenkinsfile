@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage ('Git url') {
             steps {
-                sh 'git pull origin https://github.com/shyamfree/shyams_website.git'
+                git url: 'https://github.com/shyamfree/shyams_website.git', branch: 'main'
             }
         }
         stage ('Docker build') {
