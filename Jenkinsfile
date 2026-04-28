@@ -57,13 +57,13 @@ pipeline {
 
         stage ('k8s image update') {
             steps {
-                sh '''sed -i 's|VERSION|$BUILD_NUMBER|g' kubernetes/deployment.yaml '''
+                sh '''sed -i 's|VERSION|$VERSION|g' kubernetes/deployment.yaml '''
             }
         }
         stage ('Deploy to k8s') {
             steps {
-                sh 'kubectl apply -f kuberntes/deployment.yaml'
-                sh 'kubectl apply -f kuberntes/service.yaml'
+                sh 'kubectl apply -f kubernetes/deployment.yaml'
+                sh 'kubectl apply -f kubernetes/service.yaml'
             }
         }
         stage ('Check the deployment and service') {
