@@ -19,7 +19,7 @@ pipeline {
                 ls -R
                 '''
                 script  {
-            def config = readYaml file: 'jenkins/image-configuration.yaml'
+            def yamlConfig = readYaml file: 'jenkins/image-configuration.yaml'
 
             echo "FULL YAML: ${config}"
             echo "IMAGE NODE: ${config.image}"
