@@ -75,6 +75,12 @@ pipeline {
                 sh 'kubectl get svc -ndevops'
             }
         }
+        stage('Wait and port forward') {
+             steps {
+                sh 'sleep 10'
+                sh 'kubectl port-forward service/devops-portal-service 9090:80 --address 0.0.0.0'
+             }
+        }
 
     }
 

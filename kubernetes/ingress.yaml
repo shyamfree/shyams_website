@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: devops-portal-ingress
+spec:
+  rules:
+  - host: devops-portal.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: devops-portal-service
+            port:
+              number: 80
