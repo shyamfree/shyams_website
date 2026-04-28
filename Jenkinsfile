@@ -19,8 +19,8 @@ pipeline {
         }
         stage ('Docker run') {
             steps {
-                sh 'docker rm -f dportal:v1 || true'
-                sh 'docker run -d -p 5000:5000 dportal:v1'
+                sh 'docker rm -f dportal-container || true'
+                sh 'docker run -d -p 5000:5000 --name dportal-container dportal:v1'
             }
         }
         stage ('Docker test') {
