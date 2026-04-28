@@ -18,18 +18,27 @@ pipeline {
                 pwd
                 ls -R
                 '''
-                script {
-    try {
-        def config = readYaml file: 'jenkins/image-configuration.yaml'
-        env.IMAGE_NAME = config.image.repository
-        env.IMAGE_TAG = config.image.tag
-    } catch (e) {
-        error "YAML read failed: ${e}"
-    }
-}
+                script  {
+            def config = readYaml file: 'jenkins/image-configuration.yaml'
+
+            echo "FULL YAML: ${config}"
+            echo "IMAGE NODE: ${config.image}"
+            echo "TAG VALUE: ${config.image.tag}"
+
+            env.IMAGE_NAME = config.image.repository
+            env.IMAGE_TAG = config.image.tag   // adjust if needed
+
+            echo "IMAGE_NAME: ${env.IMAGE_NAME}"
+            echo "IMAGE_TAG: ${env.IMAGE_TAG}"
+        }
+
+        sh """
+        echo IMAGE_NAME: $IMAGE_NAME
+        echo IMAGE_TAG: $IMAGE_TAG
+        """
                 sh """
-                echo IMAGE_NAME: ${env.IMAGE_NAME}
-                echo IMAGE_TAG: ${env.IMAGE_TAG}
+                echo IMAGE_NAME: $IMAGE_NAME
+                echo IMAGE_TAG: $IMAGE_TAG
                 """
             }
         }
