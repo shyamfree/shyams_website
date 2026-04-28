@@ -1,0 +1,4 @@
+# k8s/dev/image-config.yaml
+image:
+  repository: shyamfree13/devops-portal
+  tag: 30

@@ -1,9 +1,17 @@
 pipeline {
+
     agent any
     environment {
-
+        DOCKER_USER = 'shyamfree13'
+        DOCKER_REPO = 'devops-portal'
+        VERSION = "${BUILD_NUMBER}"
     }
     stages {
+        stage ('Git url') {
+            steps {
+                git url: 'https://github.com/shyamfree/shyams_website.git', branch: 'main'
+            }
+        }
         stage('Read images from file') {
             steps {
                 script {
