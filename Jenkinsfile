@@ -1,7 +1,11 @@
 pipeline {
 
     agent any
-
+    environment {
+        DOCKER_USER = 'shyamfree13'
+        DOCKER_REPO = 'devops-portal'
+        VERSION = '${BUILD_NUMBER}'
+    }
     stages {
         stage ('Git url') {
             steps {
@@ -15,6 +19,7 @@ pipeline {
         }
         stage ('Docker run') {
             steps {
+                sh 'docker rm dportal:v1 || true'
                 sh 'docker run -d -p 5000:5000 dportal:v1'
             }
         }
@@ -25,6 +30,32 @@ pipeline {
 
             }
         }
+        stage ('Docker login') {
+
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'docker-creds',
+                    usernameVariable: 'DOCKR_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                 sh ''' echo $DOCKER_PASS | docker login $DOCKER_USER --password-stdin'''
+                }
+                
+            }
+        }
+        stage('docker tag') {
+            steps {
+                sh 'docker tag  dportal:v1 $DOCKER_USER/$DOCKER_REPO:$VERSION'
+            }
+        }
+
+        stage ('Docker push') {
+            steps {
+                sh 'docker push $DOCKER_USER/$DOCKER_REPO:$VERSION'
+            }
+        }
+
+
     }
 
 
