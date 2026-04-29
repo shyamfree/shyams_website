@@ -45,7 +45,7 @@ pipeline {
         }
         stage('docker tag') {
             steps {
-                sh 'docker tag  dportal:v1 $DOCKER_USER/$DOCKER_REPO:$VERSION'
+                sh 'docker tag  dportal:${BUILD_NUMBER} $DOCKER_USER/$DOCKER_REPO:$VERSION'
             }
         }
 
