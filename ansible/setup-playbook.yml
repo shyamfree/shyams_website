@@ -1,0 +1,78 @@
+---
+- name: Setup Docker and Minikube properly
+  hosts: all
+  become: yes
+
+  vars:
+    user_name: ubuntu
+
+  tasks:
+
+    # 🔹 Install required packages
+    - name: Install dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+        state: present
+        update_cache: yes
+
+    # 🔹 Install Docker
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Enable and start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    # 🔹 Ensure docker group exists
+    - name: Create docker group if not exists
+      group:
+        name: docker
+        state: present
+
+    # 🔹 Add user to docker group
+    - name: Add user to docker group
+      user:
+        name: "{{ user_name }}"
+        groups: docker
+        append: yes
+
+    # 🔹 Reset SSH connection (VERY IMPORTANT)
+    - name: Reset SSH connection
+      meta: reset_connection
+
+    # 🔹 Verify docker works without sudo
+    - name: Test Docker access
+      become_user: "{{ user_name }}"
+      command: docker ps
+      register: docker_test
+      ignore_errors: yes
+
+    - name: Show Docker test output
+      debug:
+        var: docker_test.stdout
+
+    # 🔹 Install kubectl
+    - name: Install kubectl
+      get_url:
+        url: https://dl.k8s.io/release/v1.29.0/bin/linux/amd64/kubectl
+        dest: /usr/local/bin/kubectl
+        mode: '0755'
+
+    # 🔹 Install Minikube
+    - name: Install Minikube
+      get_url:
+        url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        dest: /usr/local/bin/minikube
+        mode: '0755'
+
+    # 🔹 Start Minikube (as normal user)
+    - name: Start Minikube
+      become_user: "{{ user_name }}"
+      command: minikube start --driver=docker

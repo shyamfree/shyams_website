@@ -1,0 +1,18 @@
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Terraform working directory
+.terraform/
+
+# Terraform lock file (optional keep or ignore)
+.terraform.lock.hcl
+
+# Zip / artifacts
+*.zip
+
+# AWS folder (if not needed)
+aws/
+
+# Sensitive files
+*.tfvars
